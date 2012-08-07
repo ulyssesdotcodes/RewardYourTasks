@@ -1,0 +1,82 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="RewardYourTasks.NewReward"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.save.rest.png" Text="save" Click="DoneButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.cancel.rest.png" Text="cancel" Click="CancelButton_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="help" Click="HelpMenuItem_Click" />
+            </shell:ApplicationBar.MenuItems>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="REWARD YOUR TASKS" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="new reward" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <TextBlock Text="Name" />
+            <TextBox x:Name="newRewardName_TextBox" InputScope="Text" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Category" VerticalAlignment="Center" />
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <toolkit:ListPicker Name="categoryListPicker" ItemsSource="{Binding}" DisplayMemberPath="Name" FullModeHeader="Categorys" ExpansionMode="FullScreenOnly">
+                    <toolkit:ListPicker.FullModeItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" />
+                            </Grid>
+                        </DataTemplate>
+                    </toolkit:ListPicker.FullModeItemTemplate>
+                </toolkit:ListPicker>
+                
+                <Button Grid.Column="1" Style="{StaticResource SimpleButtonStyle}" Padding="0" HorizontalAlignment="Right" Margin="12,2,2,0" Click="NewCategoryButton_Click">
+                    <Rectangle Width="36" Height="36" Fill="{StaticResource PhoneForegroundBrush}">
+                        <Rectangle.OpacityMask>
+                            <ImageBrush ImageSource="/RewardYourTasks;component/Images/normal.add.rest.png" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </Button>
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Rewarded every" Style="{StaticResource PhoneTextLargeStyle}" />
+                <TextBox Name="PointsPerReward_TextBox" InputScope="Number" HorizontalContentAlignment="Right" Width="75" Padding="0" Text="20" />
+                <TextBlock VerticalAlignment="Center"  Text="points." Style="{StaticResource PhoneTextLargeStyle}" />
+            </StackPanel>
+            
+            <StackPanel x:Name="customReward" Orientation="Horizontal" Visibility="Collapsed">
+                <TextBlock Text="Value" Style="{StaticResource PhoneTextLargeStyle}" />
+                <TextBox x:Name="rewardCategoryValue_TextBlock" Width="100" InputScope="Number" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+
+</phone:PhoneApplicationPage>

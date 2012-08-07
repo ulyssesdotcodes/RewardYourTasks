@@ -1,0 +1,6 @@
+<MarketplaceDetails>
+  <SmallAppTile>ryt small marketplace.png</SmallAppTile>
+  <LargeAppTile>Background.png</LargeAppTile>
+  <PCAppTile>ryt large marketplace.png</PCAppTile>
+  <ScreenShots>MainPage_SkillList1.png;MainPage_Rewards1.png;MainPage_Recurring1.png;MainPage_OneTime1.png;NewTask1.png;NewTask2.png;NewReward1.png;ViewTask1.png;</ScreenShots>
+</MarketplaceDetails>

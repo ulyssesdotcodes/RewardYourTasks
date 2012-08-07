@@ -1,0 +1,73 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="RewardYourTasks.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:RewardYourTasks"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <Style x:Key="SimpleButtonStyle" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+ 
+    <!--Panorama control-->
+    <controls:Panorama Title="reward your goals">
+ 
+        <!--Panorama item one-->
+        <controls:PanoramaItem Header="Skills">
+            <!--Double line list with text wrapping-->
+            <ListBox Margin="0,0,-12,0" ItemsSource="{Binding SkillList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,0,0,17" Orientation="Horizontal"> 
+                            <Button Style="{StaticResource SimpleButtonStyle}" Click="ViewSkill_Click">
+                                <Button.RenderTransform>
+                                    <CompositeTransform />
+                                </Button.RenderTransform>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding AchievementLevel}" />
+                                </StackPanel>
+                            </Button>
+
+                            <local:PercentProgressBar PercentComplete="{Binding LevelPercentComplete}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </controls:PanoramaItem>
+ 
+        <!--Panorama item two-->
+        <!--Use 'Orientation="Horizontal"' to enable a panel that lays out horizontally-->
+        <controls:PanoramaItem Header="achieved tasks">
+            <!--Double line list with image placeholder and text wrapping-->
+            <ListBox Margin="0,0,-12,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,17">
+                            <CheckBox IsChecked="{Binding IsComplete, Mode=TwoWay}" />
+                            <StackPanel Width="311">
+                                <TextBlock Text="{Binding Name}" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </controls:PanoramaItem>
+    </controls:Panorama>
+    
+    
+</phone:PhoneApplicationPage>

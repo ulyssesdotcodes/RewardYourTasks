@@ -1,0 +1,145 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="RewardYourTasks.NewTask"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:RewardYourTasks"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar>
+			<shell:ApplicationBarIconButton IconUri="/Images/appbar.save.rest.png" Text="save" Click="DoneButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar.cancel.rest.png" Text="cancel" Click="CancelButton_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="help" Click="HelpMenuItem_Click" />
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="NEW TASK" Style="{StaticResource PhoneTextNormalStyle}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <ScrollViewer Grid.Row="1">
+            <StackPanel x:Name="ContentPanel" Margin="12,0,12,0">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="12,18,0,0"/>
+                    </Style>
+                </StackPanel.Resources>
+                
+                <TextBlock Text="Name" />
+                <TextBox x:Name="newTaskName_TextBox" InputScope="Text" TextWrapping="Wrap" MaxHeight="100"  />
+                <TextBlock Text="Notes" />
+                <TextBox x:Name="newTaskNotes_TextBox" InputScope="Text" TextWrapping="Wrap" AcceptsReturn="True" />
+
+                <TextBlock Text="Category" VerticalAlignment="Center" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <toolkit:ListPicker Name="categoryListPicker" ItemsSource="{Binding}" DisplayMemberPath="Name" FullModeHeader="Categorys" ExpansionMode="FullScreenOnly">
+                        <toolkit:ListPicker.FullModeItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" />
+                                </Grid>
+                            </DataTemplate>
+                        </toolkit:ListPicker.FullModeItemTemplate>
+                    </toolkit:ListPicker>
+                    <Button Grid.Column="1" Style="{StaticResource SimpleButtonStyle}" Padding="0" HorizontalAlignment="Right" Margin="12,2,2,0" Click="NewCategoryButton_Click">
+                        <Rectangle Width="36" Height="36" Fill="{StaticResource PhoneForegroundBrush}">
+                            <Rectangle.OpacityMask>
+                                <ImageBrush ImageSource="Images/normal.add.rest.png" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Button>
+                </Grid>
+                
+                <TextBlock Text="Start Date" />
+                <toolkit:DatePicker x:Name="newTaskDate_datePicker"/>
+
+                <toolkit:ToggleSwitch x:Name="Reminders_ToggleSwitch" Header="Reminders" Checked="Reminders_ToggleSwitch_Checked" Unchecked="Reminders_ToggleSwitch_Unchecked" />
+                <toolkit:TimePicker x:Name="newTaskTime_timePicker" Visibility="Collapsed" />
+
+                <Grid Name="newTaskRewardValue">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Reward Points"/>
+                        <toolkit:ListPicker Name="rewardListPicker" ItemsSource="{Binding}" DisplayMemberPath="DisplayName" SelectionChanged="RewardListPicker_SelectionChanged" FullModeHeader="Name" ExpansionMode="FullScreenOnly" HorizontalContentAlignment="Stretch">
+                            <toolkit:ListPicker.FullModeItemTemplate>
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" />
+                                        <TextBlock Text="{Binding Value}" Grid.Column="1" Style="{StaticResource PhoneTextLargeStyle}" HorizontalAlignment="Right" />
+                                    </Grid>
+                                </DataTemplate>
+                            </toolkit:ListPicker.FullModeItemTemplate>
+                        </toolkit:ListPicker>
+                    </StackPanel>
+                    <StackPanel x:Name="customReward" Grid.Column="1" Orientation="Vertical" Visibility="Collapsed">
+                        <TextBlock Text="Value" />
+                        <TextBox x:Name="rewardCategoryValue_TextBlock" Width="100" Margin="0,12,0,0" InputScope="Number" />
+                    </StackPanel>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Name="Completed_CheckBox" />
+                    <TextBlock Grid.Column="1" Text="Completed" FontSize="{StaticResource PhoneFontSizeMediumLarge}" VerticalAlignment="Center"/>
+                </Grid>
+                <TextBlock Text="Occurs"/>
+                <toolkit:ListPicker Name="recurringOptionListPicker" ItemsSource="{Binding}" DisplayMemberPath="Name" FullModeHeader="Name" HorizontalContentAlignment="Stretch" SelectionChanged="RecurringOptionListPicker_SelectionChanged">
+                    <toolkit:ListPicker.FullModeItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}"/>
+                        </DataTemplate>
+                    </toolkit:ListPicker.FullModeItemTemplate>
+                </toolkit:ListPicker>
+                <local:ListPickerExtended x:Name="DaysOfWeek_SelectList" ItemsSource="{Binding}" Visibility="Collapsed" SelectionMode="Multiple" DisplayMemberPath="Name" FullModeHeader="DAYS OF THE WEEK">
+                    <local:ListPickerExtended.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </local:ListPickerExtended.ItemTemplate>
+                    <local:ListPickerExtended.FullModeItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </local:ListPickerExtended.FullModeItemTemplate>
+                </local:ListPickerExtended>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</phone:PhoneApplicationPage>

@@ -1,0 +1,21 @@
+Index: WindowsPhone71/Microsoft.Phone.Controls.Toolkit/ListPicker/ListPicker.cs
+===================================================================
+--- WindowsPhone71/Microsoft.Phone.Controls.Toolkit/ListPicker/ListPicker.cs	(revision 69081)
++++ WindowsPhone71/Microsoft.Phone.Controls.Toolkit/ListPicker/ListPicker.cs	(working copy)
+@@ -878,8 +878,15 @@
+             // Style box to look unselected
+             IsHighlighted = false;
+ 
+-            if (IsValidManipulation(e.OriginalSource, e.ManipulationOrigin.X, e.ManipulationOrigin.Y) && 0 < Items.Count)
++            Point point = new Point(e.ManipulationOrigin.X, e.ManipulationOrigin.Y);
++            if (e.ManipulationContainer != e.OriginalSource)
+             {
++                var trans = e.ManipulationContainer.TransformToVisual((UIElement)e.OriginalSource);
++                point = trans.Transform(point);
++            }
++
++            if (IsValidManipulation(e.OriginalSource, point.X, point.Y) && 0 < Items.Count)
++            {
+                 if (Open())
+                 {
+                     e.Handled = true;
